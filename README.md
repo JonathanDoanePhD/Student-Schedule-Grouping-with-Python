@@ -22,13 +22,13 @@ CSV of students with their available meeting times and preferred partners
 <br>
 (and accompanying column names, keywords, and similar information).
 
-#### BLACK BOX:.
+#### BLACK BOX:
 
-(See Methodology, below).
+(See Methodology, below.)
 
 #### OUTPUT:
 
-Optimally sized groups which share a common meeting time and includes preferred partners whenever possible
+Optimally sized groups which share a common meeting time and includes preferred partners whenever possible.
 
 
 ### Methodology
