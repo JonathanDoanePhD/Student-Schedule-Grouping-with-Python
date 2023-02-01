@@ -1,6 +1,6 @@
 # Files
 
-###### *Your own csv* (or my External_Roster-FA22-COE_Responses.csv)
+###### *Your own csv* (or my SAMPLE_Rosters.csv)
 
 ###### BLACK_BOX.ipynb
 This file contains all of the functions/code to generate groups for you.
