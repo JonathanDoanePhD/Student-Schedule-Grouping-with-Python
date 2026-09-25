@@ -1,96 +1,20 @@
-# Files
+# Student Schedule Grouping with Python
 
-###### *Your own csv* (or my SAMPLE_Rosters.csv)
+A scheduling and group assignment tool for education programs. Given a roster with meeting availability and preferred partners, it proposes groups that share a feasible time while respecting group-size targets and preferences where possible. The final assignment is presented for human review.
 
-###### BLACK_BOX.ipynb
-This file contains all of the functions/code to generate groups for you.
+## Inputs and outputs
 
-###### Group_Generator.ipynb
-This file is a guide which collects the required inputs from you, then outputs a group assignment for you to vet.
+- Input: a CSV of student availability and partner preferences, with configurable column names and group limits. [Sample roster](SAMPLE_Roster.csv).
+- Output: proposed groups, shared meeting times, and an assignment to inspect before use.
 
+## How it works
 
+The algorithm prioritizes students and time slots with fewer options, represents partner preferences as connections, and tries to retain mutual preferences. If constraints conflict, it relaxes weaker preferences and retries. It may fall back to the best feasible attempt, so users should inspect the result and make adjustments for context the input does not capture. The method adapts an [availability grouping approach](https://stackoverflow.com/questions/67391919/algorithm-to-group-people-together-based-on-their-available-timeslots-calendar).
 
+## Start here
 
+1. Open [Group_Generator.ipynb](Group_Generator.ipynb) and follow the prompts for the roster and constraints.
+2. Inspect [BLACK_BOX.ipynb](BLACK_BOX.ipynb) for the grouping functions and implementation detail.
+3. Review the proposed groups before contacting participants or treating the schedule as final.
 
-# Group Generator
-
-## Overview
-
-#### INPUT:
-
-CSV of students with their available meeting times and preferred partners
-<br>
-(and accompanying column names, keywords, and similar information).
-
-#### BLACK BOX:
-
-(See Methodology, below.)
-
-#### OUTPUT:
-
-Optimally sized groups which share a common meeting time and includes preferred partners whenever possible.
-
-
-### Methodology
-
-We use an adapted version of the following:
-
-https://stackoverflow.com/questions/67391919/algorithm-to-group-people-together-based-on-their-available-timeslots-calendar
-
-
-Based on the number of students you have and the maximum number of groups you would like formed, calculate the optimal group sizes.
-
-For each student, record which time slots are marked available and which partners are preferred.
-<br>
-Sort students from the least number of availabilities to the most.
-
-For each time slot, record how many students are available at that time.
-<br>
-Sort time slots from the least number of availabilities to the most.
-
-We connect students with their preferred partners; considering connections as transitive, we form connected components.
-<br>
-(Try to keep the connected components as large as possible, but especially try to keep the double-connections where two students both request to work with the other.)
-
-Execute the following pseudocode:
-
-`                                                                                                                                               `
->
-while not an impossible grouping:
-<br>
->>
-remove 0, or 1, or 2, or... weak/single connections in order to make student groups more flexible
-<br>
->>
-if all weak/single connections are removed:
-<br>
->>>
-remove 0, or 1, or 2, or... strong/double connections in order to make student groups more flexible
-<br>
->>
-group the (smaller) connected components into Group 1, Group 2, ...
-<br>
->>
-fill Group 1, Group 2, ... with students who have few available times first, then with students who have many available times, as needed
-<br>
-(any student who cannot fit into an already established group goes on to establish a new group)
->>
-if the number of groups exceeds the maximum number acceptable, or if a group size is too small/large:
-<br>
->>>
-this grouping is considered impossible and we will retry by removing even more connections than on this try
-<br>
->
-if that fails:
-<br>
->>
-randomly shuffle students/time slot and try the while loop again
-<br>
->
-if every attempt has still failed:
-<br>
->>
-accept the best recorded attempt
-
-`                                                                                                                                               `
-
+The sample file is provided for demonstration. Use appropriate care with real student data and avoid committing identifiable rosters to a public repository.
